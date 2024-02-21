@@ -13,7 +13,8 @@ class ContactController extends Controller
      */
     public function index()
     {
-        //
+        $contacts = Contact::orderBy('nume', 'asc')->paginate(Contact::NUMBER_PER_PAGE);
+        return view('contacts.index',['contacts'=>$contacts]);
     }
 
     /**
@@ -61,6 +62,10 @@ class ContactController extends Controller
      */
     public function destroy(Contact $contact)
     {
-        //
+        $contact->delete();
+        return response()->json([
+            'success' => true,
+            'message' => 'Inregistrarea a fost stearsa cu succes!'
+        ]);
     }
 }
